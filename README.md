@@ -1,39 +1,45 @@
+# 説明
+
+MeCab を用いて漢字からフリガナを抽出する
+
 # 本スクリプトの利用方法
 
-## コンテナを起動する（コンテナ内に mecab がインストールされる）
+### コンテナを起動する（コンテナ内に mecab がインストールされる）
 
 docker-compose up -d
 
-## 起動したコンテナに入る
+### 起動したコンテナに入る
 
 docker exec -it mecab-node sh
 
-## src 配下にいること確認
+### src 配下にいること確認
 
 pwd
 
-## packge をインストールする
+### packge をインストールする
 
 npm install
 
-## アプリを起動する
+### アプリを起動する
 
 node index.js
 
-# Docker の基本操作
+# その他
 
-## コンテナ の起動
+## Docker の基本操作
+
+### コンテナ の起動
 
 docker-compose up -d
 
-## コンテナの停止
+### コンテナの停止
 
 docker stop ${CONTAINER ID}
 
-## コンテナ の削除
+### コンテナ の削除
 
 docker rm ${CONTAINER ID}
 
-## 起動したコンテナ内に入る
+### 起動したコンテナ内に入る
 
 docker exec -it ${CONTAINER NAME} sh
