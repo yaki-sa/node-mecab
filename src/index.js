@@ -1,6 +1,6 @@
 const MeCab = require('mecab-async');
 
-// MeCabを用いてフリガナを抽出する関数
+// MeCabを用いてフリガナ(全角)を抽出する関数
 const katakanaConverter = (text) => {
   MeCab.command = 'mecab';
   let katakana = '';
@@ -15,7 +15,7 @@ const katakanaConverter = (text) => {
   return katakana;
 };
 
-// カタカナ→ひらがなに変換する関数
+// カタカナ(全角)→ひらがな(全角)に変換する関数
 const hiraganaConverter = (text) => {
   return text.replace(/[\u30a1-\u30f6]/g, function (s) {
     return String.fromCharCode(s.charCodeAt(0) - 0x60);
