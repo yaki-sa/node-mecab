@@ -1,6 +1,6 @@
 const MeCab = require('mecab-async');
 
-// MeCabを用いてカタカナに変換する関数
+// MeCabを用いてフリガナを抽出する関数
 const katakanaConverter = (text) => {
   MeCab.command = 'mecab';
   let katakana = '';
@@ -16,8 +16,15 @@ const katakanaConverter = (text) => {
 };
 
 (() => {
-  let text = '昔々、ある所にお爺さんとお婆さんが居たそうですよ！！';
-
-  const output = katakanaConverter(text);
-  console.log('カタカナ変換結果：', output);
+  // コマンドラインから引数を指定した場合、フリガナを抽出する
+  if (process.argv.length > 2) {
+    const text = process.argv[2];
+    const output = katakanaConverter(text);
+    console.log('フリガナ抽出結果：', output);
+  } else {
+    console.log('引数を設定してください');
+    console.log(
+      '（例）node index.js 昔々、ある所にお爺さんとお婆さんが居たそうですよ！！'
+    );
+  }
 })();
