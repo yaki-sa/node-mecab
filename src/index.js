@@ -7,6 +7,108 @@ const fullEiSujiConverter = (text) => {
   });
 };
 
+// 半角（カタカナ）→全角（カタカナ）に変換する関数
+const fullKatakanaConverter = (text) => {
+  const kanaMap = {
+    ｶﾞ: 'ガ',
+    ｷﾞ: 'ギ',
+    ｸﾞ: 'グ',
+    ｹﾞ: 'ゲ',
+    ｺﾞ: 'ゴ',
+    ｻﾞ: 'ザ',
+    ｼﾞ: 'ジ',
+    ｽﾞ: 'ズ',
+    ｾﾞ: 'ゼ',
+    ｿﾞ: 'ゾ',
+    ﾀﾞ: 'ダ',
+    ﾁﾞ: 'ヂ',
+    ﾂﾞ: 'ヅ',
+    ﾃﾞ: 'デ',
+    ﾄﾞ: 'ド',
+    ﾊﾞ: 'バ',
+    ﾋﾞ: 'ビ',
+    ﾌﾞ: 'ブ',
+    ﾍﾞ: 'ベ',
+    ﾎﾞ: 'ボ',
+    ﾊﾟ: 'パ',
+    ﾋﾟ: 'ピ',
+    ﾌﾟ: 'プ',
+    ﾍﾟ: 'ペ',
+    ﾎﾟ: 'ポ',
+    ｳﾞ: 'ヴ',
+    ﾜﾞ: 'ヷ',
+    ｦﾞ: 'ヺ',
+    ｱ: 'ア',
+    ｲ: 'イ',
+    ｳ: 'ウ',
+    ｴ: 'エ',
+    ｵ: 'オ',
+    ｶ: 'カ',
+    ｷ: 'キ',
+    ｸ: 'ク',
+    ｹ: 'ケ',
+    ｺ: 'コ',
+    ｻ: 'サ',
+    ｼ: 'シ',
+    ｽ: 'ス',
+    ｾ: 'セ',
+    ｿ: 'ソ',
+    ﾀ: 'タ',
+    ﾁ: 'チ',
+    ﾂ: 'ツ',
+    ﾃ: 'テ',
+    ﾄ: 'ト',
+    ﾅ: 'ナ',
+    ﾆ: 'ニ',
+    ﾇ: 'ヌ',
+    ﾈ: 'ネ',
+    ﾉ: 'ノ',
+    ﾊ: 'ハ',
+    ﾋ: 'ヒ',
+    ﾌ: 'フ',
+    ﾍ: 'ヘ',
+    ﾎ: 'ホ',
+    ﾏ: 'マ',
+    ﾐ: 'ミ',
+    ﾑ: 'ム',
+    ﾒ: 'メ',
+    ﾓ: 'モ',
+    ﾔ: 'ヤ',
+    ﾕ: 'ユ',
+    ﾖ: 'ヨ',
+    ﾗ: 'ラ',
+    ﾘ: 'リ',
+    ﾙ: 'ル',
+    ﾚ: 'レ',
+    ﾛ: 'ロ',
+    ﾜ: 'ワ',
+    ｦ: 'ヲ',
+    ﾝ: 'ン',
+    ｧ: 'ァ',
+    ｨ: 'ィ',
+    ｩ: 'ゥ',
+    ｪ: 'ェ',
+    ｫ: 'ォ',
+    ｯ: 'ッ',
+    ｬ: 'ャ',
+    ｭ: 'ュ',
+    ｮ: 'ョ',
+    '｡': '。',
+    '､': '、',
+    ｰ: 'ー',
+    '｢': '「',
+    '｣': '」',
+    '･': '・',
+  };
+  let reg = new RegExp('(' + Object.keys(kanaMap).join('|') + ')', 'g');
+  return text
+    .replace(reg, function (s) {
+      return kanaMap[s];
+    })
+    .replace(/ﾞ/g, '゛')
+    .replace(/ﾟ/g, '゜');
+};
+
 // MeCabを用いてフリガナ(全角)を抽出する関数
 const katakanaConverter = (text) => {
   MeCab.command = 'mecab';
@@ -35,7 +137,9 @@ const hiraganaConverter = (text) => {
     const text = process.argv[2];
     const fullEiSuji = fullEiSujiConverter(text);
     console.log('全角（英数字）変換：', fullEiSuji);
-    const furigana_katakana = katakanaConverter(fullEiSuji);
+    const fullKatakana = fullKatakanaConverter(fullEiSuji);
+    console.log('全角（カタカナ）変換：', fullKatakana);
+    const furigana_katakana = katakanaConverter(fullKatakana);
     console.log('フリガナ：', furigana_katakana);
     const furigana_hiragana = hiraganaConverter(furigana_katakana);
     console.log('ふりがな：', furigana_hiragana);
