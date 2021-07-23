@@ -15,12 +15,21 @@ const katakanaConverter = (text) => {
   return katakana;
 };
 
+// カタカナ→ひらがなに変換する関数
+const hiraganaConverter = (text) => {
+  return text.replace(/[\u30a1-\u30f6]/g, function (s) {
+    return String.fromCharCode(s.charCodeAt(0) - 0x60);
+  });
+};
+
 (() => {
-  // コマンドラインから引数を指定した場合、フリガナを抽出する
+  // コマンドラインから引数を指定した場合、ふりがなを抽出する
   if (process.argv.length > 2) {
     const text = process.argv[2];
-    const output = katakanaConverter(text);
-    console.log('フリガナ抽出結果：', output);
+    const furigana_katakana = katakanaConverter(text);
+    console.log('フリガナ：', furigana_katakana);
+    const furigana_hiragana = hiraganaConverter(furigana_katakana);
+    console.log('ふりがな：', furigana_hiragana);
   } else {
     console.log('引数を設定してください');
     console.log(
